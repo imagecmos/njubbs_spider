@@ -5,4 +5,7 @@ import time
 while True:
     cre=bbs_top10.crawler()
     cre.run()
-    time.sleep(3600)
+    print ''' wait for next crawler and sleep for 1800s
+##############################################################################
+    '''
+    time.sleep(1800)

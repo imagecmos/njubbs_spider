@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import os,sys,time
 import MySQLdb
 import re
+import requests
 
 class crawler:
     def __init__(self):
@@ -23,17 +24,16 @@ class crawler:
 
     #get the data and insert into db
     def run(self):
-        request=urllib2.urlopen(r"http://bbs.nju.edu.cn/bbstop10")
-        soup=BeautifulSoup(request,"lxml",from_encoding="gb2312")
-        n=0
+        request=requests.get(r"http://bbs.nju.edu.cn/bbstop10")
+        text=request.text
+        soup=BeautifulSoup(text,'lxml',from_encoding='gb2312')
+        tr=soup.table.find_all(['tr'])
+
         insert=list()
-        for link in soup.find_all(['td']):
-            if n<5:
-                    n+=1
-                    continue
-            for str in link.stripped_strings:
-                str=str.encode("utf-8")
-                insert.append(str)
+        for i in tr[1:]:
+            one_tr=i.find_all(['td'])
+            for td in one_tr:
+                insert.append(td.string.strip().encode('utf-8'))
 
         td_all=soup.find_all('td')
         time_list=list()
@@ -43,12 +43,11 @@ class crawler:
                 m=re.search(r"M\.\w+\.A",u)
                 if m:
                     title_url=r"http://bbs.nju.edu.cn/"+u
-                    title_request=urllib2.urlopen(title_url)
-                    title_soup=BeautifulSoup(title_request,"lxml",from_encoding="gdb2312")
+                    title_request=requests.get(title_url)
+                    title_soup=BeautifulSoup(title_request.text,"lxml",from_encoding="gdb2312")
                     try:
                         body=title_soup.textarea.string.encode("utf-8")
                     except Exception as e:
-                        print e
                         time_list.append("pass")
                         continue
                     m=re.search("(?<=南京大学小百合站 \().+(?=\))",body)
@@ -67,7 +66,7 @@ class crawler:
             a=insert[i:i+6]
             new_insert.append(a)
 
-        con=MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",db="mysql",charset="utf8")
+        con=MySQLdb.connect(host="127.0.0.1",port=8889,user="root",passwd="root",db="mysql",charset="utf8")
         cur=con.cursor()
         for line in new_insert:
             rank,forum,title,author,follow,title_time=line

@@ -5,7 +5,10 @@ import os,sys,time
 import MySQLdb
 import re
 import requests
+<<<<<<< HEAD
 import logging
+=======
+>>>>>>> 91ac9e3ebc8f7d34b1106636e14cae53662cf618
 
 class crawler:
     def __init__(self):
@@ -74,6 +77,10 @@ class crawler:
             sql="INSERT INTO bbs VALUES('%s','%s','%s','%s','%s','%s')"%(rank,forum,title,author,follow,title_time)
             result=cur.execute(sql)
             if result!=1:
+<<<<<<< HEAD
+=======
+                print rank,forum,title,author,forum,"insert error"
+>>>>>>> 91ac9e3ebc8f7d34b1106636e14cae53662cf618
                 con.rollback()
                 continue
             con.commit()
@@ -90,5 +97,9 @@ class crawler:
         try:
             file.write(pre)
         except Exception as e:
+<<<<<<< HEAD
             pass
+=======
+            print "write html source into file error"
+>>>>>>> 91ac9e3ebc8f7d34b1106636e14cae53662cf618
 

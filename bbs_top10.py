@@ -81,6 +81,7 @@ class crawler:
             result=cur.execute(sql)
             if result!=1:
                 self.logger.info(rank+" "+forum+" "+title+" "+author+" "+forum+" "+"insert error")
+                print rank,forum,title,author,forum,"insert error"
                 con.rollback()
                 continue
             con.commit()
@@ -98,4 +99,7 @@ class crawler:
             file.write(pre)
         except Exception as e:
             self.logger.info("write html source into file error")
+            pass
+            print "write html source into file error"
+
 

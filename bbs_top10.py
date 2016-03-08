@@ -5,9 +5,16 @@ import os,sys,time
 import MySQLdb
 import re
 import requests
+import logging
 
 class crawler:
     def __init__(self):
+        self.logger=logging.getLogger()
+        self.hander=logging.StreamHandler()
+        self.formate=logging.Formatter('%(asctime)s-----%(processName)s----%(message)s)')
+        self.hander.setFormatter(self.formate)
+        self.logger.addHandler(self.hander)
+        self.logger.setLevel(logging.INFO)
         self.url=r"http://bbs.nju.edu.cn/bbstop10"
         self.save_html_path=r"D:\TaotaoCao\spider\html"
 
@@ -73,7 +80,7 @@ class crawler:
             sql="INSERT INTO bbs VALUES('%s','%s','%s','%s','%s','%s')"%(rank,forum,title,author,follow,title_time)
             result=cur.execute(sql)
             if result!=1:
-                print rank,forum,title,author,forum,"insert error"
+                self.logger.info(rank+" "+forum+" "+title+" "+author+" "+forum+" "+"insert error")
                 con.rollback()
                 continue
             con.commit()
@@ -90,5 +97,5 @@ class crawler:
         try:
             file.write(pre)
         except Exception as e:
-            print "write html source into file error"
+            self.logger.info("write html source into file error")
 

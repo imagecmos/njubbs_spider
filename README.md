@@ -33,9 +33,6 @@ github：  [imagecmos](https://github.com/imagecmos/spider.git)<br><br>
 ![](http://7xqin1.com1.z0.glb.clouddn.com/author.png)
 最后的最后，上十大最多的那位同学，我特地上小百合搜了一下，身兼三个版主，难怪
 
-####最后安利一下我们实验室 
-**天空地一体化智能信息网络研究所**<br>
-感兴趣的学弟学妹欢迎加入（好了，广告我也打了，老板你可以把我脖子上的刀拿开了）<br>
 
 *imagecmos*
 2016年3月9日 15:58
